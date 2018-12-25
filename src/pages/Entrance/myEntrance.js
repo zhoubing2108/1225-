@@ -72,7 +72,7 @@ class MyEntrance extends Component {
   
   getUser = () => {
     // let code = getQueryVarible('code');
-    let code = 'l7p6R2-Fz80iJRSF6HG__-mVK0T-8-0ljVt4q13i1qM';
+    let code = '3qtilxOr_cGRxLHLmtec6jnwfNhkAr5g9zJzHmVsw-8';
     request({
       url:'/api/v1/token/user',
       data:{

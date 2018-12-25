@@ -35,7 +35,7 @@ const cancel = (e) => {
       wf_type: 'access_control_t'
     },
     beforeSend: (xml) => {
-      xml.setRequestHeader('token', '257072821f62974d983eedfd0e6efa4f')
+      xml.setRequestHeader('token', sessionStorage.getItem('token'))
     },
     success: (res) => {
       console.log(res);
@@ -57,10 +57,7 @@ const _status = {
 
 @observer
 class MyEntrance extends Component {
-  // componentDidMount(){
-  //   this.getNeedList();
-  //   this.fetchList();
-  // }
+  
   componentDidMount(){
     if(!sessionStorage.getItem('token')){
       this.getUser();
@@ -78,6 +75,7 @@ class MyEntrance extends Component {
       data:{
         code
       },
+      method:'GET',
       success:(res)=>{
         sessionStorage.setItem('token',res.token);
         sessionStorage.setItem('u_id',res.u_id);
@@ -233,7 +231,6 @@ class MyEntrance extends Component {
       },
       beforeSend: (xml) => {
         xml.setRequestHeader('token', sessionStorage.getItem('token'))
-        // xml.setRequestHeader('token','b479ed26594050ceab67c6f09ecea889')
       },
       success: (res) => {
         store.needList = res;
@@ -256,7 +253,6 @@ class MyEntrance extends Component {
       },
       beforeSend: (xml) => {
         xml.setRequestHeader('token', sessionStorage.getItem('token'))
-        // xml.setRequestHeader('token','b479ed26594050ceab67c6f09ecea889')
       },
       success: (res) => {
         store.dataSource = res.data;

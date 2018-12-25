@@ -35,7 +35,7 @@ const cancel = (e) => {
       wf_type: 'access_control_t'
     },
     beforeSend: (xml) => {
-      xml.setRequestHeader('token', '257072821f62974d983eedfd0e6efa4f')
+      xml.setRequestHeader('token', sessionStorage.getItem('token'));
     },
     success: (res) => {
       console.log(res);
@@ -57,10 +57,7 @@ const _status = {
 
 @observer
 class MyEntrance extends Component {
-  // componentDidMount(){
-  //   this.getNeedList();
-  //   this.fetchList();
-  // }
+  
   componentDidMount(){
     if(!sessionStorage.getItem('token')){
       this.getUser();
@@ -78,6 +75,7 @@ class MyEntrance extends Component {
       data:{
         code
       },
+      method:'GET',
       success:(res)=>{
         sessionStorage.setItem('token',res.token);
         sessionStorage.setItem('u_id',res.u_id);
@@ -91,6 +89,7 @@ class MyEntrance extends Component {
   };
 
   render() {
+    console.log(sessionStorage);
     let { total, dataSource, needList,needTotal, current,needCurrent } = store;
     const HistoryList = () => (
       dataSource.map(e => (<div key={e.flow.id} style={{ fontSize: 16, padding: '10px', background: '#eefaff', border: '1px solid #bbe1f1' }}>
@@ -119,7 +118,6 @@ class MyEntrance extends Component {
         <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.access}</span>
         <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.deadline}</span>
         <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.user_type}</span>
-        {/* <span style={{ marginRight: '10px', padding: '5px 0', }}>审核中</span> */}
 
         <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.process[0].admin.username}</span>
         
@@ -201,13 +199,10 @@ class MyEntrance extends Component {
       },
       beforeSend: (xml) => {
         xml.setRequestHeader('token', sessionStorage.getItem('token'))
-        // xml.setRequestHeader('token','b479ed26594050ceab67c6f09ecea889')
       },
       success: (res) => {
         store.needList = res;
-        console.log('代办的数据',res);
         console.log(res.length);
-        console.log(res);
       }
     })
   }
@@ -224,7 +219,6 @@ class MyEntrance extends Component {
       },
       beforeSend: (xml) => {
         xml.setRequestHeader('token', sessionStorage.getItem('token'))
-        // xml.setRequestHeader('token','b479ed26594050ceab67c6f09ecea889')
       },
       success: (res) => {
         store.dataSource = res.data;

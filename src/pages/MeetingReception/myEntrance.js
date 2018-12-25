@@ -7,11 +7,7 @@ import {observer} from 'mobx-react';
 import getQueryVarible from '../../helpers/get-query-variable';
 const Item = List.Item;
 
-// const tabs = [
-//   { title: '当前申请' },
-//   { title: '历史申请' },
-//   { title: '审核记录'}
-// ];
+
 const tabs = [
   {title:'待办列表'},
   {title: '审核列表'},

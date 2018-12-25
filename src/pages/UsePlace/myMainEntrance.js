@@ -35,7 +35,7 @@ const cancel = (e) => {
       wf_type: 'access_control_t'
     },
     beforeSend: (xml) => {
-      xml.setRequestHeader('token', '257072821f62974d983eedfd0e6efa4f')
+      xml.setRequestHeader('token', sessionStorage.getItem('token'));
     },
     success: (res) => {
       console.log(res);
@@ -66,10 +66,10 @@ class MyEntrance extends Component {
       this.getUser();
       this.getNeedList();
       this.fetchList();
-    }else{
+    }
       this.getNeedList();
       this.fetchList();
-    }
+    
   }
   getUser = () => {
     let code = getQueryVarible('code');
@@ -78,6 +78,7 @@ class MyEntrance extends Component {
       data:{
         code
       },
+      method:'GET',
       success:(res)=>{
         sessionStorage.setItem('token',res.token);
         sessionStorage.setItem('u_id',res.u_id);

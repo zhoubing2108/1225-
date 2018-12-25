@@ -86,29 +86,29 @@ import getQueryVarible from '../../helpers/get-query-variable';
   ];
 @observer
 class UsePlaceCom extends React.Component{
-    componentDidMount(){
-      this.getUser();
-    }
-    getUser = () => {
-      // let code = getQueryVarible('code');
-      // let code = getQueryVarible('v3aI6nThdpr_NGzOqjmUYDFTgGN0OesIwqbf3Bg-DCY')
-      let code = '4ib8hTQemMQdDcOaMAn2vn4iGE6oQTkGKDavzXu9GM8'
-      request({
-        url:'/api/v1/token/user',
-        data:{
-          code
-        },
-        success:(res)=>{
-          sessionStorage.setItem('token',res.token);
-          sessionStorage.setItem('u_id',res.u_id);
-          sessionStorage.setItem('username',res.username);
-          sessionStorage.setItem('account',res.account);
-          sessionStorage.setItem('role',res.role);
-          }
-      })
+    // componentDidMount(){
+    //   this.getUser();
+    // }
+    // getUser = () => {
+    //   // let code = getQueryVarible('code');
+    //   // let code = getQueryVarible('v3aI6nThdpr_NGzOqjmUYDFTgGN0OesIwqbf3Bg-DCY')
+    //   let code = '4ib8hTQemMQdDcOaMAn2vn4iGE6oQTkGKDavzXu9GM8'
+    //   request({
+    //     url:'/api/v1/token/user',
+    //     data:{
+    //       code
+    //     },
+    //     success:(res)=>{
+    //       sessionStorage.setItem('token',res.token);
+    //       sessionStorage.setItem('u_id',res.u_id);
+    //       sessionStorage.setItem('username',res.username);
+    //       sessionStorage.setItem('account',res.account);
+    //       sessionStorage.setItem('role',res.role);
+    //       }
+    //   })
 
 
-    };
+    // };
 
     
     handleData = (e) => {

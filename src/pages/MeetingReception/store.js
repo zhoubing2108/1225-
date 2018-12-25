@@ -18,14 +18,14 @@ class Store{
     @observable departmental = [''];
     @observable section = [''];
     @observable under_section = ['3'];
-    // @observable male = [''];
-    // @observable female = [''];
+    
+
     @observable meeting_place = '';
     @observable meeting_date = '';
     @observable meeting_count = [''];
-    // @observable hotel = '';
+
     @observable accompany = '';
-    // @observable meals = '';没有菜单信息
+
     @observable letter_size = '';
     @observable letter_title = '';
     @observable users = '';
@@ -46,14 +46,7 @@ class Store{
     @observable RadioValue = 0;
     @observable deadline = new Date(Date.now());
     @observable userList = [];
-    // @observable listParams = {
-    //   time_begin: moment().startOf('month'),
-    //   time_end: moment(),
-    //   access: '全部',
-    //   username: '全部',
-    //   department: '全部',
-    //   status: 3,
-    // }
+    
     @observable total = 5;
     @observable needTotal = 5;
     @observable dataSource = []

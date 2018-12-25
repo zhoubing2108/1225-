@@ -74,6 +74,7 @@ class MyEntrance extends Component {
         data:{
           code
         },
+        method:'GET',
         success:(res)=>{
           sessionStorage.setItem('token',res.token);
           sessionStorage.setItem('u_id',res.u_id);

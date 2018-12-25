@@ -118,7 +118,7 @@ class Apply extends Component {
         access
       },
       beforeSend: (xml) => {
-        xml.setRequestHeader('token','6fd5ad9d1304deb856ecac94df1849a7')
+        xml.setRequestHeader('token',sessionStorage.getItem('token'))
       },
       success: (res)=>{
         console.log(res);

@@ -98,39 +98,16 @@ const meal_types = [
     value:'培训餐',
   } 
 ];
-// const RadioItem = Radio.RadioItem;
+
 
 @observer
 class Order extends React.Component {
-    componentDidMount(){
-      this.getUser();
-    }
-    getUser = () => {
-      let code = getQueryVarible('code');
-      request({
-        url:'/api/v1/token/user',
-        data:{
-          code
-        },
-        success:(res)=>{
-          sessionStorage.setItem('token',res.token);
-          sessionStorage.setItem('u_id',res.u_id);
-          sessionStorage.setItem('username',res.username);
-          sessionStorage.setItem('account',res.account);
-          sessionStorage.setItem('role',res.role);
-          }
-      })
-
-
-    };
 
     handleData =  (e) => {
         let {accompany_count,detail,users,letter_size,letter_title,apply_date,time_begin,time_end,project,unit,leader,post,grade,departmental,section,under_section,meeting_place,meeting_date,meeting_count,accompany,meals} = store;
         departmental = departmental.toString();
         section = section.toString();
         under_section = under_section.toString();
-        // male = male.toString();
-        // female = female.toString();
         meeting_count = meeting_count.toString();
         users = users.replace(/[\r\n]/g, 'A');
         detail = detail.replace(/[\r\n]/g,'A');
@@ -280,15 +257,6 @@ class Order extends React.Component {
                         </Picker>
                     </Flex.Item>
                 </Flex>
-
-                {/* <InputItem
-                  placeholder="请输入"
-                  onChange={(e) => {store.hotel = e}}
-                >拟住宿酒店：</InputItem>
-                <InputItem
-                  placeholder="请输入"
-                  onChange={(e) => {store.meeting_place = e}}
-                >使用会场：</InputItem> */}
                 <InputItem
                   placeholder="2018-12-30 09:00"
                   onChange={(e) => {store.meeting_date = e}}
