@@ -4,6 +4,8 @@ import store from './store';
 // 数据要对应
 import request from '../../helpers/request';
 import { observer } from 'mobx-react';
+import getQueryVarible from '../../helpers/get-query-variable';
+
 
 const alert = Modal.alert;
 const showAlert = (id) => {
@@ -55,10 +57,39 @@ const _status = {
 
 @observer
 class MyEntrance extends Component {
+  // componentDidMount(){
+  //   this.getNeedList();
+  //   this.fetchList();
+  // }
   componentDidMount(){
-    this.getNeedList();
-    this.fetchList();
+    if(!sessionStorage.getItem('token')){
+      this.getUser();
+      this.getNeedList();
+      this.fetchList();
+    }else{
+      this.getNeedList();
+      this.fetchList();
+    }
   }
+  getUser = () => {
+    let code = getQueryVarible('code');
+    request({
+      url:'/api/v1/token/user',
+      data:{
+        code
+      },
+      success:(res)=>{
+        sessionStorage.setItem('token',res.token);
+        sessionStorage.setItem('u_id',res.u_id);
+        sessionStorage.setItem('username',res.username);
+        sessionStorage.setItem('account',res.account);
+        sessionStorage.setItem('role',res.role);
+        }
+    })
+
+
+  };
+
   render() {
     let { total, dataSource, needList,needTotal, current,needCurrent } = store;
     const HistoryList = () => (
