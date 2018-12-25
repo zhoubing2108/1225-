@@ -8,9 +8,12 @@ class App extends Component {
     return (
       <div>
         <Switch>
+           <Route path='/meetingbooking' render={()=> <WrapperComponent Comp={import('./MeetingBooking/bottomtab')} name='meetingbooking' /> } />
+
+          <Route path='/hotelbooking' render={()=> <WrapperComponent Comp={import('./HotelBooking/bottomtab')} name='hotelbooking' /> } />
+          <Route path='/buffet' render={()=> <WrapperComponent Comp={import('./Buffet/bottomtab')} name='buffet' /> } />
           <Route path='/useplacemeeting' render={()=> <WrapperComponent Comp={import('./UsePlaceMeeting/bottomtab')} name='useplacemeeting' /> } />
           <Route path='/useplace' render={()=> <WrapperComponent Comp={import('./UsePlace/bottomtab')} name='useplace' /> } />
-
           <Route path='/dinning' render={()=> <WrapperComponent Comp={import('./DinningAround/bottomtab')} name='entrance' /> } />
           <Route path='/reception' render={()=> <WrapperComponent Comp={import('./MeetingReception/bottomtab')} name='reception' /> } />
           <Route path='/' render={()=> <WrapperComponent Comp={import('./Entrance/Entrance')} name='entrance' /> } />

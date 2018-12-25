@@ -170,13 +170,13 @@ class MyEntrance extends Component {
           <Tabs tabs={tabs} style={{ width: '100%' }} initialPage={0} animated={false} useOnPan={false}>
             <div style={{ height: '100%', backgroundColor: '#fff' }}>
               <NeedList />
-              <button onClick={this.getNeedList}>test</button>
-              <button onClick={this.check}>同意</button>
+              {/* <button onClick={this.getNeedList}>test</button>
+              <button onClick={this.check}>同意</button> */}
             </div>
             <div style={{ height: '100%', backgroundColor: '#fff' }}>
               <HistoryList />
               <Pagination total={total} current={current} onChange={(e, i) => { let page = e; this.fetchList(page) }} />
-              <button onClick={this.test}>test</button> <button style={{ marginLeft: 10 }} onClick={()=>{this.fetchList(1)}}>fetchlist</button>
+              {/* <button onClick={this.test}>test</button> <button style={{ marginLeft: 10 }} onClick={()=>{this.fetchList(1)}}>fetchlist</button> */}
             </div>
           </Tabs>
         </div>

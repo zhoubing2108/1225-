@@ -6,7 +6,6 @@ import request from '../../helpers/request';
 import { observer } from 'mobx-react';
 import getQueryVarible from '../../helpers/get-query-variable';
 
-
 const alert = Modal.alert;
 const showAlert = (id) => {
   const alertInstance = alert('Delete', '是否取消申请', [
@@ -35,7 +34,7 @@ const cancel = (e) => {
       wf_type: 'access_control_t'
     },
     beforeSend: (xml) => {
-      xml.setRequestHeader('token', sessionStorage.getItem('token'));
+      xml.setRequestHeader('token', sessionStorage.getItem('token'))
     },
     success: (res) => {
       console.log(res);
@@ -57,49 +56,56 @@ const _status = {
 
 @observer
 class MyEntrance extends Component {
-  // componentDidMount(){
-  //   this.getNeedList();
-  //   this.fetchList();
-  // }
   componentDidMount(){
     if(!sessionStorage.getItem('token')){
       this.getUser();
       this.getNeedList();
       this.fetchList();
-    }
+    }else{
       this.getNeedList();
       this.fetchList();
-    
+    }
   }
+
   getUser = () => {
-    let code = getQueryVarible('code');
-    request({
-      url:'/api/v1/token/user',
-      data:{
-        code
-      },
-      method:'GET',
-      success:(res)=>{
-        sessionStorage.setItem('token',res.token);
-        sessionStorage.setItem('u_id',res.u_id);
-        sessionStorage.setItem('username',res.username);
-        sessionStorage.setItem('account',res.account);
-        sessionStorage.setItem('role',res.role);
-        }
-    })
+      let code = getQueryVarible('code');
+      request({
+        url:'/api/v1/token/user',
+        data:{
+          code
+        },
+        method:'GET',
+        success:(res)=>{
+          sessionStorage.setItem('token',res.token);
+          sessionStorage.setItem('u_id',res.u_id);
+          sessionStorage.setItem('username',res.username);
+          sessionStorage.setItem('account',res.account);
+          sessionStorage.setItem('role',res.role);
+          }
+      })
 
 
-  };
-
+    };
   render() {
     let { total, dataSource, needList,needTotal, current,needCurrent } = store;
     const HistoryList = () => (
       dataSource.map(e => (<div key={e.flow.id} style={{ fontSize: 16, padding: '10px', background: '#eefaff', border: '1px solid #bbe1f1' }}>
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.create_time}</span>
         <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.username}</span>
-        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.space}</span>
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.department}</span><br />
+
         <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.time_begin}</span>
         <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.time_end}</span>
-        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.reason}</span>
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.unit}</span><br />
+
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.hotel}</span><br />
+
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.male}</span>
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.female}</span>
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.single_room}</span>
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.double_room}</span><br />
+
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.members}</span><br />
 
         <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.process[0].admin.username}</span>
     
@@ -114,19 +120,29 @@ class MyEntrance extends Component {
     )
     const NeedList = () => (
       needList.map(e => (<div key={e.flow.id} style={{ fontSize: 16, padding: '10px', background: '#eefaff', border: '1px solid #bbe1f1' }}>
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.create_time}</span>
         <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.username}</span>
-        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.space}</span>
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.department}</span><br />
+
         <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.time_begin}</span>
         <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.time_end}</span>
-        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.reason}</span>
-        {/* <span style={{ marginRight: '10px', padding: '5px 0', }}>审核中</span> */}
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.unit}</span><br />
+
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.hotel}</span><br />
+
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.male}</span>
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.female}</span>
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.single_room}</span>
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.double_room}</span><br />
+
+        <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.flow.members}</span><br />
 
         <span style={{ marginRight: '10px', padding: '5px 0', }}>{e.process[0].admin.username}</span>
         
         <span style={{ marginRight: '10px', padding: '5px 0 ', }}>{_status[e.status]}</span><br />
         {e.process.map((v, i) => (
           <span key={i}>
-            <span  style={{ marginRight: '5px', padding: '5px 0 ', }}>{v.admin.username}:{v.btn == 'ok' ? <span style={{ color: 'green' }} style={{}}>通过</span> : <span style={{ color: 'red' }}>不通过</span>}</span>
+            <span style={{ marginRight: '5px', padding: '5px 0 ', }}>{v.admin.username}:{v.btn == 'ok' ? <span style={{ color: 'green' }} style={{}}>通过</span> : <span style={{ color: 'red' }}>不通过</span>}</span>
           </span>))}
         {e.btn == 'cancel' ? <Button onClick={() => showAlert(e)} type='primary' size='small' style={{ display: 'inline-block', height: 24, lineHeight: '24px', margin: '5px 10px 0 0' }}>取消申请</Button> : null}
         {e.btn == 'check' ? <span style={{ margin: '5px 10px 0 0'}}><Button onClick={this.test} type='primary' size='small' style={{ display: 'inline-block', height: 24, lineHeight: '24px', marginRight: '5px' }} >通过</Button><Button onClick={this.test} type='primary' size='small' style={{ display: 'inline-block', height: 24, lineHeight: '24px', margin: '5px 10px 0 0' }} >不通过</Button> </span> : null}
@@ -197,11 +213,10 @@ class MyEntrance extends Component {
       url: '/api/v1/flow/ready',
       method: 'GET',
       data: {
-        wf_type: 'space_recreational_t',
+        wf_type: 'hotel_t',
       },
       beforeSend: (xml) => {
         xml.setRequestHeader('token', sessionStorage.getItem('token'))
-        // xml.setRequestHeader('token','b479ed26594050ceab67c6f09ecea889')
       },
       success: (res) => {
         store.needList = res;
@@ -218,13 +233,12 @@ class MyEntrance extends Component {
       url: '/api/v1/flow/complete',
       method: 'GET',
       data: {
-        wf_type: 'space_recreational_t',
+        wf_type: 'hotel_t',
         page: page,
         size: 10
       },
       beforeSend: (xml) => {
         xml.setRequestHeader('token', sessionStorage.getItem('token'))
-        // xml.setRequestHeader('token','b479ed26594050ceab67c6f09ecea889')
       },
       success: (res) => {
         store.dataSource = res.data;
