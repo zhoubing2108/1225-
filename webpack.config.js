@@ -9,7 +9,7 @@ const config = {
     app: [path.join(__dirname, "src/index.js")]
   },
   output: {
-    path: path.join(__dirname, "dist"),
+    path: path.join(__dirname, "wx"),
     filename: '[name].[hash]js',
     chunkFilename: '[name].[hash].js',
     publicPath: "/"
