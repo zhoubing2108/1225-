@@ -77,9 +77,7 @@ class MyUsePlace extends Component{
     
     
       componentDidMount() {
-        this.getUser();
-        this.fetchList();
-        this.fetchListLeft(1);
+      
       }
     
       getUser = () => {

@@ -237,7 +237,7 @@ class MyEntrance extends Component {
       return (
       <div>
         <Fragment>
-          <div style={{ marginTop: 5 }}>
+            <div style={{ marginTop: '50px' }}>
             <Tabs tabs={tabs} initialPage={0} animated={false} useOnPan={false}  onChange={(tab, index) => { console.log('onChange', index, tab); }}>
               <div style={{ height: '100%', backgroundColor: '#fff' }}>
               <List>
@@ -260,7 +260,7 @@ class MyEntrance extends Component {
     //如果有问题就把上面的if都删了
     return (
       <Fragment>
-        <div style={{ marginTop: 5 }}>
+        <div style={{ marginTop: '50px' }}>
         {/* onTabClick={this.whichTab} */}
           <Tabs tabs={tabs} initialPage={0} animated={false} useOnPan={false}  onChange={(tab, index) => { console.log('onChange', index, tab); }}>
             <div style={{ height: '100%', backgroundColor: '#fff' }}>
@@ -276,12 +276,10 @@ class MyEntrance extends Component {
                     <span>{e.phone}</span>&nbsp;
                     <span>{e.department}</span>&nbsp;
                     <span>{e.product}</span><br />
-
                     <span>{e.content}</span>&nbsp;
                     <span>{e.meal_space}</span>&nbsp;
                     <span>{e.member}</span>&nbsp;
                     <span>{e.table_number}</span><br />
-
                     <span>{e.meals.replace('A','\n')}</span>
                     {/* 将A换回换行符,需要<pre>标签配合 */}
                     <span style={{float:'right'}}><a href="" onClick={(e) => e.preventDefault()}>{_status[e.status]}</a></span><br />

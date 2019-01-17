@@ -29,6 +29,8 @@ class Store{
     @observable needList = [];
     @observable current = 1;
     @observable needCurrent = 1;
+  @observable info = {};
+  @observable check_con = '';
     
 }
 export default new Store();

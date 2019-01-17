@@ -5,6 +5,8 @@ import MyEntrance from './myMainEntrance';
 import { observer } from 'mobx-react';
 import st from './buffet.css';
 import BuffetApplyCom from './buffetApply';
+import store from './store';
+import request from '../../helpers/request'
 
 const tabs = [
   { title: '申请' },
@@ -22,6 +24,46 @@ class Meeting extends Component {
       hidden: false,
       fullScreen: true,
     };
+  }
+  getNeedList = () => {
+    request({
+      url: '/api/v1/flow/ready',
+      method: 'GET',
+      data: {
+        wf_type: 'buffet_t',
+      },
+      beforeSend: (xml) => {
+        xml.setRequestHeader('token', sessionStorage.getItem('token'))
+      },
+      success: (res) => {
+        store.needList = res;
+        console.log('代办的数据', res);
+        console.log(res.length);
+        console.log(res);
+      }
+    })
+  }
+
+  fetchList = (page) => {
+    let { time_begin, time_end, status, username, access, department } = store.listParams;
+    request({
+      url: '/api/v1/flow/complete',
+      method: 'GET',
+      data: {
+        wf_type: 'buffet_t',
+        page: page,
+        size: 10
+      },
+      beforeSend: (xml) => {
+        xml.setRequestHeader('token', sessionStorage.getItem('token'))
+      },
+      success: (res) => {
+        store.dataSource = res.data;
+        store.total = res.last_page
+        console.log(res);
+      }
+    })
+
   }
   renderContent(pageText) {
     return (
@@ -95,6 +137,8 @@ class Meeting extends Component {
               this.setState({
                 selectedTab: 'redTab',
               });
+              this.fetchList(1);
+              this.getNeedList();
             }}
             data-seed="logId1"
           >

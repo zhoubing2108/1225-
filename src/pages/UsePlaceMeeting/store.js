@@ -34,7 +34,8 @@ class Store{
       department: '全部',
       status: 3,
     }
-
+  @observable info = {};
+  @observable check_con = '';
 
     @observable RadioValue = 0;
     @observable deadline = new Date(Date.now());

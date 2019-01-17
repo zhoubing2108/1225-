@@ -60,10 +60,9 @@ class UsePlaceCom extends React.Component{
     
     handleData = (e) => {
       console.log(store);
-      let {reason,unit, space, time_begin, user_count, time_end} = store;
+      let {reason,unit, space, time_begin,  time_end} = store;
       time_begin = moment(time_begin).format('YYYY-MM-DD HH:mm');
       time_end = moment(time_end).format('YYYY-MM-DD HH:mm');
-      user_count = parseInt(user_count);
       space = space.toString();
       request({
         url:'/api/v1/multi/save',
@@ -73,14 +72,13 @@ class UsePlaceCom extends React.Component{
           space,
           time_begin,
           time_end,
-          user_count,
           reason
         },
         beforeSend: (xml) => {
           xml.setRequestHeader('token',sessionStorage.getItem('token'))
         },
         success: (res) => {
-          console.log(res);
+          alert('提交成功')
         }
       })
 
@@ -173,14 +171,6 @@ class UsePlaceCom extends React.Component{
                 >
                   <List.Item arrow="horizontal">多功能室名称</List.Item>
                 </Picker>
-                <InputItem
-                  placeholder="请输入"
-                  onChange={(e) => {store.space = e}}
-                >功能室场地</InputItem>
-                <InputItem
-                  placeholder="输入人数"
-                  onChange={(e) => {store.user_count = e}}
-                >人数:</InputItem>
                 <List renderHeader={() => '申请使用事由'}>
                     <TextareaItem
                         placeholder="事由备注"

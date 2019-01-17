@@ -121,6 +121,7 @@ class Apply extends Component {
         xml.setRequestHeader('token',sessionStorage.getItem('token'))
       },
       success: (res)=>{
+        alert('提交成功')
         console.log(res);
       }
     })

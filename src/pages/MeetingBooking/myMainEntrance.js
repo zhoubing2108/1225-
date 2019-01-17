@@ -9,8 +9,8 @@ import getQueryVarible from '../../helpers/get-query-variable';
 const alert = Modal.alert;
 const showAlert = (id) => {
   const alertInstance = alert('Delete', '是否取消申请', [
-    { text: 'Cancel', onPress: () => console.log('cancel', id), style: 'default' },
-    { text: 'OK', onPress: () => cancel(id) },
+    { text: '取消', onPress: () => console.log('cancel', id), style: 'default' },
+    { text: '确定', onPress: () => cancel(id) },
   ]);
   setTimeout(() => {
     console.log('auto close');
@@ -57,14 +57,8 @@ const _status = {
 @observer
 class MyEntrance extends Component {
   componentDidMount(){
-    if(!sessionStorage.getItem('token')){
-      this.getUser();
-      this.getNeedList();
-      this.fetchList();
-    }else{
-      this.getNeedList();
-      this.fetchList();
-    }
+    this.getNeedList();
+    this.fetchList();
   }
 
   getUser = () => {
@@ -83,9 +77,17 @@ class MyEntrance extends Component {
           sessionStorage.setItem('role',res.role);
           }
       })
-
-
     };
+  showAlert = (e) => {
+    const alertInstance = alert('Delete', '是否取消申请', [
+      { text: '取消', onPress: () => console.log('cancel', e), style: 'default' },
+      { text: '确定', onPress: () => this.getCheck(e, 'cancel') },
+    ]);
+    setTimeout(() => {
+      console.log('auto close');
+      alertInstance.close();
+    }, 500000);
+  };
   render() {
     let { total, dataSource, needList,needTotal, current,needCurrent } = store;
     const HistoryList = () => (
@@ -136,8 +138,22 @@ class MyEntrance extends Component {
           <span key={i}>
             <span style={{ marginRight: '5px', padding: '5px 0 ', }}>{v.admin.username}:{v.btn == 'ok' ? <span style={{ color: 'green' }} style={{}}>通过</span> : <span style={{ color: 'red' }}>不通过</span>}</span>
           </span>))}
-        {e.btn == 'cancel' ? <Button onClick={() => showAlert(e)} type='primary' size='small' style={{ display: 'inline-block', height: 24, lineHeight: '24px', margin: '5px 10px 0 0' }}>取消申请</Button> : null}
-        {e.btn == 'check' ? <span style={{ margin: '5px 10px 0 0'}}><Button onClick={this.test} type='primary' size='small' style={{ display: 'inline-block', height: 24, lineHeight: '24px', marginRight: '5px' }} >通过</Button><Button onClick={this.test} type='primary' size='small' style={{ display: 'inline-block', height: 24, lineHeight: '24px', margin: '5px 10px 0 0' }} >不通过</Button> </span> : null}
+        {e.btn == 'cancel' ?
+          <Button
+            onClick={() => this.showAlert(e)} type='primary' size='small' style={{ display: 'inline-block', height: 24, lineHeight: '24px', margin: '5px 10px 0 0' }}>取消申请</Button>
+          : null}
+        {e.btn == 'check' ?
+          <span style={{ margin: '5px 10px 0 0' }}>
+            <Button onClick={() => prompt('通过', '请输入意见', [
+              { text: '取消' },
+              { text: '提交', onPress: value => { store.check_con = value; this.getCheck(e, 'ok') } },
+            ], 'default', '通过')} type='primary' size='small' style={{ display: 'inline-block', height: 24, lineHeight: '24px', marginRight: '5px' }} >通过</Button>
+            <Button onClick={() => prompt('不通过', '请输入意见', [
+              { text: '取消' },
+              { text: '提交', onPress: value => { store.check_con = value; this.getCheck(e, 'back') } },
+            ], 'default', '通过')} type='primary' size='small' style={{ display: 'inline-block', height: 24, lineHeight: '24px', margin: '5px 10px 0 0' }} >不通过</Button>
+          </span>
+          : null}
       </div>
       )
       )
@@ -239,6 +255,50 @@ class MyEntrance extends Component {
       }
     })
 
+  }
+  getCheck = (e, type) => {
+    request({
+      url: '/api/v1/flow/info',
+      method: 'GET',
+      data: {
+        wf_fid: e.from_id,
+        wf_type: 'meetingplace_t'
+      },
+      beforeSend: (xml) => {
+        xml.setRequestHeader('token', sessionStorage.getItem('token'))
+      },
+      success: (res) => {
+        store.info = res.info;
+        this.pass(e.from_id, type);
+      },
+    })
+  }
+  pass = (id, type) => {
+    let { info, check_con } = store;
+    let { flow_id, run_id, flow_process, run_process, nexprocess } = info;
+    request({
+      url: '/api/v1/flow/check/pass',
+      method: 'POST',
+      data: {
+        check_con,
+        flow_id,
+        run_id,
+        flow_process,
+        run_process,
+        npid: nexprocess.id,
+        wf_fid: id,
+        submit_to_save: type,
+        wf_type: 'meetingplace_t'
+      },
+      beforeSend: (xml) => {
+        xml.setRequestHeader('token', sessionStorage.getItem('token'))
+      },
+      success: () => {
+        alert('操作成功');
+        this.getNeedList();
+        this.fetchList(1);
+      }
+    })
   }
   getQueryVariable = (variable) => {
     let u_id = sessionStorage.getItem('u_id');

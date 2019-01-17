@@ -77,12 +77,8 @@ class MyUsePlace extends Component{
     
     
       componentDidMount() {
-        if(!sessionStorage.getItem('token')){
-          this.getUser();
-        }
-        // this.getUser();
+        this.getNeedList();
         this.fetchList();
-        this.fetchListLeft(1);
       }
     
       getUser = () => {

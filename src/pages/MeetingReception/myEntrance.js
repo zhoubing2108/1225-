@@ -246,7 +246,7 @@ class MyMeeting extends Component {
     //拿到最新的store
     return (
       <Fragment>
-        <div style={{ marginTop: 5 }}>
+        <div style={{ marginTop: '50px' }}>
         {/* onTabClick={this.whichTab} */}
           <Tabs tabs={tabs} initialPage={0} animated={false} useOnPan={false}  onChange={(tab, index) => { console.log('onChange', index, tab); }}>
             <div style={{ height: '100%', backgroundColor: '#fff' }}>

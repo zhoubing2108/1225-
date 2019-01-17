@@ -19,10 +19,12 @@ class Store{
     @observable section = [''];
     @observable under_section = ['3'];
     
-
+    @observable info = {};
+    @observable check_con = '';
     @observable meeting_place = '';
     @observable meeting_date = '';
     @observable meeting_count = [''];
+    @observable accompany_count = [''];
 
     @observable accompany = '';
 

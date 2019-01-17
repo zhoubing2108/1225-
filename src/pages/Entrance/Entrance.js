@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { TabBar } from 'antd-mobile';
-// import MyEntrance from './myEntrance';
 import { observer } from 'mobx-react';
 import store from './store';
 import st from './entrance.css';
 import ApplyCom from './apply';
 import MyEntrance from './myMainEntrance';
+import request from '../../helpers/request'
 
 
 
@@ -27,6 +27,46 @@ class Entrance extends Component {
       hidden: false,
       fullScreen: true,
     };
+  }
+  getNeedList = () => {
+    request({
+      url: '/api/v1/flow/ready',
+      method: 'GET',
+      data: {
+        wf_type: 'access_control_t',
+      },
+      beforeSend: (xml) => {
+        xml.setRequestHeader('token', sessionStorage.getItem('token'))
+      },
+      success: (res) => {
+        store.needList = res;
+        console.log('代办的数据', res);
+        console.log(res.length);
+        console.log(res);
+      }
+    })
+  }
+
+  fetchList = (page) => {
+    let { time_begin, time_end, status, username, access, department } = store.listParams;
+    request({
+      url: '/api/v1/flow/complete',
+      method: 'GET',
+      data: {
+        wf_type: 'access_control_t',
+        page: page,
+        size: 10
+      },
+      beforeSend: (xml) => {
+        xml.setRequestHeader('token', sessionStorage.getItem('token'))
+      },
+      success: (res) => {
+        store.dataSource = res.data;
+        store.total = res.last_page
+        console.log(res);
+      }
+    })
+
   }
   renderContent(pageText) {
     return (
@@ -100,6 +140,8 @@ class Entrance extends Component {
               this.setState({
                 selectedTab: 'redTab',
               });
+              this.getNeedList();
+              this.fetchList(1);
             }}
             data-seed="logId1"
           >

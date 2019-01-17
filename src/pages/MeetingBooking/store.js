@@ -16,7 +16,8 @@ class Store{
     @observable reason = '';
 
    
-
+  @observable info = {};
+  @observable check_con = '';
     @observable RadioValue = 0;
     @observable deadline = new Date(Date.now());
     @observable userList = [];

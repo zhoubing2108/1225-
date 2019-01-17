@@ -12,7 +12,6 @@ class BuffetApplyCom extends React.Component{
       // this.getUser();
     }
     handleData = (e) => {
-     
       let {meals,unit, time_begin, time_end,project} = store;
       meals =  meals.replace(/[\r\n]/g, 'A');
       console.log(store);
@@ -30,6 +29,7 @@ class BuffetApplyCom extends React.Component{
           xml.setRequestHeader('token',sessionStorage.getItem('token'))
         },
         success: (res) => {
+          alert('提交成功')
           console.log(res);
         }
       })

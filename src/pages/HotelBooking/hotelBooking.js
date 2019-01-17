@@ -7,6 +7,10 @@ import moment from 'moment';
 
 const meeting_counts = [
     {
+      label: '0',
+      value: '0',
+    },
+    {
       label: '1',
       value: '1',
     },
@@ -81,6 +85,7 @@ class HotelBookingCom extends React.Component{
           xml.setRequestHeader('token',sessionStorage.getItem('token'))
         },
         success: (res) => {
+          alert('提交成功')
           console.log(res);
         }
       })
@@ -112,9 +117,6 @@ class HotelBookingCom extends React.Component{
                 >
                   <List.Item arrow="horizontal">结束时间</List.Item>
                 </DatePicker>
-
-
-
                 <InputItem
                   placeholder="请输入"
                   onChange={(e) => {store.unit = e}}
@@ -197,5 +199,4 @@ class HotelBookingCom extends React.Component{
         );
     }
 }
-console.log(store);
 export default HotelBookingCom;

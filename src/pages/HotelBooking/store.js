@@ -18,7 +18,8 @@ class Store{
     @observable double_room = '';
     @observable members = '';
 
-
+  @observable info = {};
+  @observable check_con = '';
     @observable RadioValue = 0;
     @observable deadline = new Date(Date.now());
     @observable userList = [];

@@ -44,6 +44,10 @@ const places = [
 ];
 const meeting_counts = [
   {
+    label: '0',
+    value: '0',
+  },
+  {
     label: '1',
     value: '1',
   },
@@ -104,11 +108,12 @@ const meal_types = [
 class Order extends React.Component {
 
     handleData =  (e) => {
-        let {accompany_count,detail,users,letter_size,letter_title,apply_date,time_begin,time_end,project,unit,leader,post,grade,departmental,section,under_section,meeting_place,meeting_date,meeting_count,accompany,meals} = store;
+        let {accompany_count,detail,users,letter_size,letter_title,apply_date,unit,leader,post,grade,departmental,section,under_section,meeting_place,meeting_date,meeting_count,accompany,meals} = store;
         departmental = departmental.toString();
         section = section.toString();
         under_section = under_section.toString();
         meeting_count = meeting_count.toString();
+        accompany_count = accompany_count.toString();
         users = users.replace(/[\r\n]/g, 'A');
         detail = detail.replace(/[\r\n]/g,'A');
 
@@ -117,9 +122,9 @@ class Order extends React.Component {
             method:'POST',
             data:{
                 apply_date:moment(apply_date).format('YYYY-MM-DD'),
-                time_begin:moment(time_begin).format('YYYY-MM-DD'),
-                time_end:moment(time_end).format('YYYY-MM-DD'),
-                project,
+                // time_begin:moment(time_begin).format('YYYY-MM-DD'),
+                // time_end:moment(time_end).format('YYYY-MM-DD'),
+                // project,
                 unit,
                 leader,
                 post,
@@ -142,6 +147,7 @@ class Order extends React.Component {
 
             },
             success: (res) => {
+              alert('提交成功')
                 console.log(res);
             }
             
@@ -152,7 +158,7 @@ class Order extends React.Component {
     return (
       <div>
             <List>
-                <DatePicker
+                {/* <DatePicker
                   mode="date"
                   title="开始时间"
                   extra="Optional"
@@ -161,8 +167,8 @@ class Order extends React.Component {
                   onOk={date => store.time_begin = date}
                 >
                   <List.Item arrow="horizontal">会议开始</List.Item>
-                </DatePicker>
-                <DatePicker
+                </DatePicker> */}
+                {/* <DatePicker
                   mode="date"
                   title="结束时间"
                   extra="Optional"
@@ -171,7 +177,7 @@ class Order extends React.Component {
                   onOk={date => store.time_end = date}
                 >
                   <List.Item arrow="horizontal">会议结束</List.Item>
-                </DatePicker>
+                </DatePicker> */}
                 <Flex style={{ padding: '15px' }}>
                     <Flex.Item>
                         <InputItem
@@ -184,8 +190,8 @@ class Order extends React.Component {
                         data={meeting_counts} 
                         cols={1} 
                         className="forss"
-                        value={store.meeting_count}
-                        onChange={(e) => {store.meeting_count = e}}
+                        value={store.accompany_count}
+                        onChange={(e) => {store.accompany_count = e}}
                         >
                         <List.Item arrow="horizontal">陪餐人数：</List.Item>
                         </Picker>
@@ -275,10 +281,10 @@ class Order extends React.Component {
                   placeholder="请输入"
                   onChange={(e) => {store.accompany = e}}
                 >陪同人名单：</InputItem>
-                <InputItem
+                {/* <InputItem
                   placeholder="请输入"
                   onChange={(e) => {store.project = e}}
-                >公务活动项目：</InputItem>
+                >公务活动项目：</InputItem> */}
 
                 <List renderHeader={() => '接待对象：姓名,单位,职务(例:张三,中国移动,正式员工)多条数据换行填写'}>
                     <TextareaItem
